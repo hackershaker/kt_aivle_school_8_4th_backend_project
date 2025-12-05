@@ -57,8 +57,8 @@ public class BookController {
     @PatchMapping("/{bookId}/cover")
     public ResponseEntity<BookDTO> updateBookCover(
             @PathVariable Long bookId,
-            @RequestBody String coverUrl) {
-        BookDTO updatedBook = bookService.updateBookCover(bookId, coverUrl);
+            @RequestBody BookDTO bookDTO) {
+        BookDTO updatedBook = bookService.updateBookCover(bookId, bookDTO.getCoverImageUrl());
         return ResponseEntity.ok(updatedBook);
     }
 }

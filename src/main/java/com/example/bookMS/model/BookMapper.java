@@ -3,6 +3,7 @@ package com.example.bookMS.model;
 public class BookMapper {
 
     // BookDTO -> Book Entity (생성용)
+    // bookId, createdAt, updatedAt은 자동 생성되므로 포함하지 않음
     public static Book toEntity(BookDTO dto) {
         return Book.builder()
                 .title(dto.getTitle())
@@ -24,6 +25,7 @@ public class BookMapper {
     }
 
     // BookDTO로 Entity 업데이트
+    // bookId, createdAt, updatedAt은 변경하지 않음
     public static void updateEntity(Book book, BookDTO dto) {
         if (dto.getTitle() != null) {
             book.setTitle(dto.getTitle());
