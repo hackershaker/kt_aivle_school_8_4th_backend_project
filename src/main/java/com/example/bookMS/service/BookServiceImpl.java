@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,53 +16,55 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public BookResponse createBook(BookCreateRequest request) {
-        Book book = BookMapper.toEntity(request);
+    public BookDTO createBook(BookDTO bookDTO) {
+        Book book = BookMapper.toEntity(bookDTO);
         bookRepository.save(book);
-
-        return BookMapper.toResponse(book);
+        return BookMapper.toDTO(book);
     }
 
     @Override
-    public List<BookResponse> getBookList() {
+    public List<BookDTO> getBookList() {
         List<Book> bookList = bookRepository.findAll();
-        return bookList.stream().map(BookMapper::toResponse).toList();
-    }
-
-    // 책 id로 가져오기
-    @Override
-    public BookResponse getBook(Long id){
-        Optional<Book> book = bookRepository.findById(id);
-        if(book.isEmpty()){
-            throw new IllegalArgumentException("존재하지 않는 책입니다.");
-        }
-        return BookMapper.toResponse(book.get());
+        return bookList.stream()
+                .map(BookMapper::toDTO)
+                .toList();
     }
 
     @Override
-    @Transactional
-    public BookResponse updateBook(Long id, BookUpdateRequest request) {
-        Optional<Book> book = bookRepository.findById(id);
-        if(book.isEmpty()){
-            throw new IllegalArgumentException("존재하지 않는 책입니다.");
-        }
-        BookMapper.updateEntity(book.get(), request);
-        bookRepository.save(book.get());
-        return BookMapper.toResponse(book.get());
+    public BookDTO getBook(Long bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 책입니다. ID: " + bookId));
+        return BookMapper.toDTO(book);
     }
 
     @Override
     @Transactional
-    public void deleteBook(Long id){
-        bookRepository.deleteById(id);
-    }
+    public BookDTO updateBook(Long bookId, BookDTO bookDTO) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 책입니다. ID: " + bookId));
 
-    @Override
-    public BookResponse updateBookCover(Long id, String string) {
-        Book book = bookRepository.findById(id).get();
-        book.setCoverImageUrl(string);
+        BookMapper.updateEntity(book, bookDTO);
         bookRepository.save(book);
-        return BookMapper.toResponse(book);
+        return BookMapper.toDTO(book);
     }
 
+    @Override
+    @Transactional
+    public void deleteBook(Long bookId) {
+        if (!bookRepository.existsById(bookId)) {
+            throw new IllegalArgumentException("존재하지 않는 책입니다. ID: " + bookId);
+        }
+        bookRepository.deleteById(bookId);
+    }
+
+    @Override
+    @Transactional
+    public BookDTO updateBookCover(Long bookId, String coverUrl) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 책입니다. ID: " + bookId));
+
+        book.setCoverImageUrl(coverUrl);
+        bookRepository.save(book);
+        return BookMapper.toDTO(book);
+    }
 }

@@ -1,14 +1,20 @@
 package com.example.bookMS.model;
 
-import jakarta.transaction.Transactional;
-import lombok.Builder;
-
-@Builder
 public class BookMapper {
-    @Transactional
-    public static BookResponse toResponse(Book book) {
-        return BookResponse.builder()
-                .id(book.getBookId())
+
+    // BookDTO -> Book Entity (생성용)
+    public static Book toEntity(BookDTO dto) {
+        return Book.builder()
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .coverImageUrl(dto.getCoverImageUrl())
+                .build();
+    }
+
+    // Book Entity -> BookDTO
+    public static BookDTO toDTO(Book book) {
+        return BookDTO.builder()
+                .bookId(book.getBookId())
                 .title(book.getTitle())
                 .content(book.getContent())
                 .coverImageUrl(book.getCoverImageUrl())
@@ -17,19 +23,16 @@ public class BookMapper {
                 .build();
     }
 
-    public static void updateEntity(Book book, BookUpdateRequest request) {
-        if (request.getTitle() != null) {
-            book.setTitle(request.getTitle());
+    // BookDTO로 Entity 업데이트
+    public static void updateEntity(Book book, BookDTO dto) {
+        if (dto.getTitle() != null) {
+            book.setTitle(dto.getTitle());
         }
-        if (request.getContent() != null) {
-            book.setContent(request.getContent());
+        if (dto.getContent() != null) {
+            book.setContent(dto.getContent());
         }
-    }
-
-    public static Book toEntity(BookCreateRequest request) {
-        return Book.builder()
-                .title(request.getTitle())
-                .content(request.getContent())
-                .build();
+        if (dto.getCoverImageUrl() != null) {
+            book.setCoverImageUrl(dto.getCoverImageUrl());
+        }
     }
 }

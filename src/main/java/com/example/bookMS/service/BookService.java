@@ -1,23 +1,26 @@
 package com.example.bookMS.service;
 
-import com.example.bookMS.model.Book;
-import com.example.bookMS.model.BookCreateRequest;
-import com.example.bookMS.model.BookResponse;
-import com.example.bookMS.model.BookUpdateRequest;
+import com.example.bookMS.model.BookDTO;
 
 import java.util.List;
 
 public interface BookService {
 
-    BookResponse createBook(BookCreateRequest request);
+    // 도서 생성
+    BookDTO createBook(BookDTO bookDTO);
 
-    List<BookResponse> getBookList();
+    // 도서 목록 조회
+    List<BookDTO> getBookList();
 
-    BookResponse getBook(Long id);
+    // 도서 단건 조회
+    BookDTO getBook(Long bookId);
 
-    BookResponse updateBook(Long id, BookUpdateRequest request);
+    // 도서 수정
+    BookDTO updateBook(Long bookId, BookDTO bookDTO);
 
-    void deleteBook(Long id);
+    // 도서 삭제
+    void deleteBook(Long bookId);
 
-    BookResponse updateBookCover(Long id, String imageUrl);
+    // 도서 표지 이미지 수정
+    BookDTO updateBookCover(Long bookId, String coverUrl);
 }

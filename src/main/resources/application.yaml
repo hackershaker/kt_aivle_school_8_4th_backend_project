@@ -14,4 +14,4 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
-    show-sql: ture
+    show-sql: true
