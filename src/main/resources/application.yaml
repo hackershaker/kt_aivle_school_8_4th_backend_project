@@ -15,3 +15,15 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: true
+
+
+# 로깅 설정
+logging:
+  level:
+    root: INFO
+    com.example.bookMS: DEBUG
+    com.example.bookMS.aspect: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  charset:
+    console: UTF-8
