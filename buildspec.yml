@@ -8,10 +8,19 @@ phases:
     commands:
       - ./gradlew clean bootJar
 
+  post_build:
+    commands:
+      - rm -rf bundle
+      - mkdir -p bundle/scripts bundle/build/libs
+      - cp appspec.yml bundle/
+      - cp -r scripts/* bundle/scripts/
+      - cp build/libs/*.jar bundle/build/libs/
+      - ls -al bundle
+      - find bundle -maxdepth 3 -type f -print
 
 artifacts:
   files:
     - appspec.yml
-    - scripts/**/*
+    - scripts/*.sh
     - build/libs/*.jar
   discard-paths: no
