@@ -4,10 +4,13 @@ phases:
   pre_build:
     commands:
       - chmod +x ./gradlew
+      - sed -i 's/\r$//' ./gradlew || true
+      - chmod +x scripts/*.sh || true
+      - sed -i 's/\r$//' scripts/*.sh || true
+      - ls -al scripts || true
   build:
     commands:
       - ./gradlew clean bootJar
-
   post_build:
     commands:
       - rm -rf bundle
@@ -15,12 +18,10 @@ phases:
       - cp appspec.yml bundle/
       - cp -r scripts/* bundle/scripts/
       - cp build/libs/*.jar bundle/build/libs/
-      - ls -al bundle
       - find bundle -maxdepth 3 -type f -print
 
 artifacts:
+  base-directory: bundle
   files:
-    - appspec.yml
-    - scripts/*.sh
-    - build/libs/*.jar
+    - '**/*'
   discard-paths: no
