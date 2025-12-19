@@ -39,3 +39,11 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+tasks.named("bootJar"){
+	archiveFileName = "bookMS-${project.version}.jar"
+}
+
+jar{
+	enabled = false // plain.jar 생성하지 않음
+}

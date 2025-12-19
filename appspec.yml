@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 
 files:
-  - source: build/libs
+  - source: build/libs/app.jar
     destination: /opt/myapp
 
 hooks:
@@ -11,7 +11,7 @@ hooks:
       timeout: 300
       runas: root
 
-  ApplicationStart:
+  AfterInstall:
     - location: scripts/start.sh
       timeout: 300
       runas: root

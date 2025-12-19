@@ -7,7 +7,8 @@ if [[ -z "$JAVA_BIN" ]]; then
   exit 127
 fi
 
-JAR="$(find /opt/myapp -maxdepth 1 -type f -name '*.jar' ! -name '*-plain.jar' | head -n 1)"
+JAR="$(find /opt/myapp -maxdepth 1 -type f -name 'bookMS-*.jar' ! -name '*-plain.jar' | head -n 1)"
+
 if [[ -z "$JAR" ]]; then
   echo "[ERROR] jar not found under /opt/myapp" >&2
   exit 1
