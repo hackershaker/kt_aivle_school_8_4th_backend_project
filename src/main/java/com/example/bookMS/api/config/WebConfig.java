@@ -13,11 +13,12 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins(
                         "http://localhost:5173",
                         "https://kt-aivle-school-8-4th-frontend-project-btg6fwyyh.vercel.app",
-                        "http://a085009-front-prod.s3-website-ap-southeast-1.amazonaws.com"
+                        "http://a085009-front-prod.s3-website-ap-southeast-1.amazonaws.com",
+                        ""
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(true)
+//                .allowCredentials(true)
                 .maxAge(3600);
     }
 }
