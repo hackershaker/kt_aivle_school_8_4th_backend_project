@@ -15,10 +15,15 @@ phases:
       - docker build -t 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest .
   post_build:
     commands:
-      - echo "Pushing to ECR..."
-      # 여기도 이름을 직접 박으세요
+     - echo "Pushing to ECR..."
       - docker push 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest
-      - echo "Push completed."
+      - echo "Updating Kubeconfig..."
+      - aws eks update-kubeconfig --region ap-southeast-1 --name ai0917-backend-eks
+      - echo "Applying Kubernetes Manifests..."
+      - kubectl apply -f deployment.yaml
+      - kubectl apply -f service.yaml
+      - kubectl apply -f ingress.yaml
+      - echo "Deployment completed."
       - printf '[{"name":"ai0917-backend","imageUri":"416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest"}]' > imagedefinitions.json
 
 artifacts:

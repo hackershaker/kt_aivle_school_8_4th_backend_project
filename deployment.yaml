@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai0917-backend
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ai0917-backend
+  template:
+    metadata:
+      labels:
+        app: ai0917-backend
+    spec:
+      containers:
+        - name: backend
+          image: 416225317325.dkr.ecr.ap-southeast-1.amazonaws.com/ai0917-backend-springboot:latest
+          ports:
+            - containerPort: 8080
