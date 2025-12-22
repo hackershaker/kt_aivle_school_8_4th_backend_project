@@ -12,6 +12,6 @@ phases:
 
 artifacts:
   files:
-    - appspec.yml
+    - appspec_ec2.yml
     - scripts/**/*
     - build/libs/*.jar
