@@ -10,6 +10,13 @@ phases:
       - ./gradlew clean bootJar
       - ./gradlew -q properties | grep "^version:"
       - ls -al build/libs
+  post_build:
+    commands:
+      - echo "PWD=$(pwd)"
+      - ls -al
+      - ls -al appspec*
+      - echo "=== find appspec.yml ==="
+      - find . -maxdepth 4 -name "appspec.yml" -print
 
 artifacts:
   files:
